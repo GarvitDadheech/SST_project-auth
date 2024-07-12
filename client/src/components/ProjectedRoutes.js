@@ -20,6 +20,18 @@ function ProtectedRoute({ children }) {
       message.error(error.message);
     }
   };
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      getValidUser();
+    } else {
+      navigate("/login");
+    }
+  }, [navigate]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
     return (
       <Layout>
         <Header
