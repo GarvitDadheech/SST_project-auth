@@ -7,6 +7,19 @@ import { HomeOutlined, LogoutOutlined, ProfileOutlined, UserOutlined } from "@an
 import { Link } from "react-router-dom";
 
 function ProtectedRoute({ children }) {
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  const getValidUser = async () => {
+    try {
+      const response = await GetCurrentUser();
+      setUser(response.data);
+      // Hide Loader
+    } catch (error) {
+      setUser(null);
+      message.error(error.message);
+    }
+  };
     return (
       <Layout>
         <Header
